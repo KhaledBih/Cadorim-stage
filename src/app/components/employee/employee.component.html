@@ -1,0 +1,126 @@
+<!-- Inside your employee.component.html file -->
+<div *ngIf="!loading">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>{{ "Name" | translate }}</th>
+        <th>{{ "Email" | translate }}</th>
+        <th>{{ "Action" | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let emp of employees
+            | paginate
+              : {
+                  itemsPerPage: pageSize,
+                  currentPage: currentPage,
+                  totalItems: count
+                }
+        "
+      >
+        <td>{{ emp.id }}</td>
+        <td>{{ emp.name }}</td>
+        <td>{{ emp.email }}</td>
+        <td>
+          <a class="btn btn-warning btn-sm mx-2" (click)="openEditModal(emp)">{{
+            "Edit" | translate
+          }}</a>
+          <a class="btn btn-danger btn-sm mx-2" (click)="deleteData(emp.id)">{{
+            "Delete" | translate
+          }}</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Add pagination -->
+  <div class="text-center">
+    <pagination-controls
+      previousLabel="{{ 'Prev' | translate }}"
+      nextLabel="{{ 'Next' | translate }}"
+      [responsive]="true"
+      (pageChange)="pageChanged($event)"
+    ></pagination-controls>
+  </div>
+</div>
+<div *ngIf="loading" class="text-center text-success mt-5">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">{{ "Loading..." | translate }}</span>
+  </div>
+</div>
+<div
+  bsModal
+  #editmodal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  aria-labelledby="libererLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{ "Edit employee" | translate }}
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="employeeForm">
+          <div class="form-group">
+            <label for="name">{{ "Enter name" | translate }}</label>
+            <input type="text" formControlName="name" class="form-control" />
+            <div
+              *ngIf="
+                employeeForm.get('name')?.hasError('required') &&
+                employeeForm.get('name')?.touched
+              "
+              class="text-danger"
+            >
+              {{ "Name is required." | translate }}
+            </div>
+            <div
+              *ngIf="
+                employeeForm.get('name')?.hasError('minlength') &&
+                employeeForm.get('name')?.touched
+              "
+              class="text-danger"
+            >
+              {{ "Name must be at least 3 characters." | translate }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">{{ "Enter email" | translate }}</label>
+            <input type="email" formControlName="email" class="form-control" />
+            <div
+              *ngIf="
+                employeeForm.get('email')?.hasError('required') &&
+                employeeForm.get('email')?.touched
+              "
+              class="text-danger"
+            >
+              {{ "Email is required." | translate }}
+            </div>
+            <div
+              *ngIf="
+                employeeForm.get('email')?.hasError('email') &&
+                employeeForm.get('email')?.touched
+              "
+              class="text-danger"
+            >
+              {{ "Please enter a valid email address." | translate }}
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+          {{ "Close" | translate }}
+        </button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges()">
+          {{ "Save changes" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

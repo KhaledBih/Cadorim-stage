@@ -1,0 +1,194 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="crud">{{ "CRUD" | translate }}</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <!-- Utilisez la classe 'me-auto' pour aligner à gauche -->
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">{{
+            "Home" | translate
+          }}</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <!-- Dropdown for language selection -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fa fa-language"></i>
+            <!-- Icon for language selection -->
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" href="#" (click)="switchLanguage('en')"
+                >English</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" (click)="switchLanguage('fr')"
+                >Français</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" (click)="switchLanguage('ar')"
+                >العربية</a
+              >
+            </li>
+          </ul>
+        </li>
+        <!-- End of language selection dropdown -->
+
+        <!-- Add item -->
+        <li class="nav-item">
+          <a class="nav-link active" (click)="openAddModal()">{{
+            "Add" | translate
+          }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div
+  bsModal
+  #addmodal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  aria-labelledby="libererLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{ "Add employee" | translate }}
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="insertData(employeeForm)" #employeeForm="ngForm">
+          <div class="form-group">
+            <label for="name">{{ "Enter name" | translate }}</label>
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              [(ngModel)]="employee.name"
+              required
+              minlength="3"
+            />
+            <div
+              *ngIf="
+                employeeForm.controls['name'].errors?.['required'] &&
+                employeeForm.controls['name'].touched
+              "
+              class="text-danger"
+            >
+              {{ "Name is required." | translate }}
+            </div>
+            <div
+              *ngIf="
+                employeeForm.controls['name'].errors?.['minlength'] &&
+                employeeForm.controls['name'].touched
+              "
+              class="text-danger"
+            >
+              {{ "Name must be at least 3 characters." | translate }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">{{ "Enter email" | translate }}</label>
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              [(ngModel)]="employee.email"
+              required
+              email
+            />
+            <div
+              *ngIf="
+                employeeForm.controls['email'].errors?.['required'] &&
+                employeeForm.controls['email'].touched
+              "
+              class="text-danger"
+            >
+              {{ "Email is required." | translate }}
+            </div>
+            <div
+              *ngIf="
+                employeeForm.controls['email'].errors?.['email'] &&
+                employeeForm.controls['email'].touched
+              "
+              class="text-danger"
+            >
+              {{ "Please enter a valid email address." | translate }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">{{ "Enter password" | translate }}</label>
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              [(ngModel)]="employee.password"
+              required
+              minlength="6"
+            />
+            <div
+              *ngIf="
+                employeeForm.controls['password'].errors?.['required'] &&
+                employeeForm.controls['password'].touched
+              "
+              class="text-danger"
+            >
+              {{ "Password is required." | translate }}
+            </div>
+            <!-- can  -->
+            <div
+              *ngIf="
+                employeeForm.controls['password'].errors?.['minlength'] &&
+                employeeForm.controls['password'].touched
+              "
+              class="text-danger"
+            >
+              {{ "Password must be at least 6 characters." | translate }}
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeAddModal()"
+        >
+          {{ "Close" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="addEmploy(employeeForm)"
+        >
+          {{ "Add" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

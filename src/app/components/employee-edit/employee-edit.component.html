@@ -1,0 +1,71 @@
+<form [formGroup]="employeeForm" (ngSubmit)="updateEmployee()">
+  <div class="form-group">
+    <label for="name">Entrez le nom</label>
+    <input type="text" formControlName="name" class="form-control" />
+    <div
+      *ngIf="
+        employeeForm.get('name')?.hasError('required') &&
+        employeeForm.get('name')?.touched
+      "
+      class="text-danger"
+    >
+      Le nom est requis.
+    </div>
+    <div
+      *ngIf="
+        employeeForm.get('name')?.hasError('minlength') &&
+        employeeForm.get('name')?.touched
+      "
+      class="text-danger"
+    >
+      Le nom doit comporter au moins 3 caractères.
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">Entrez l'adresse e-mail</label>
+    <input type="email" formControlName="email" class="form-control" />
+    <div
+      *ngIf="
+        employeeForm.get('email')?.hasError('required') &&
+        employeeForm.get('email')?.touched
+      "
+      class="text-danger"
+    >
+      L'e-mail est requis.
+    </div>
+    <div
+      *ngIf="
+        employeeForm.get('email')?.hasError('email') &&
+        employeeForm.get('email')?.touched
+      "
+      class="text-danger"
+    >
+      Veuillez saisir une adresse e-mail valide.
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password">Entrez le mot de passe</label>
+    <input type="password" formControlName="password" class="form-control" />
+    <div
+      *ngIf="
+        employeeForm.get('password')?.hasError('required') &&
+        employeeForm.get('password')?.touched
+      "
+      class="text-danger"
+    >
+      Le mot de passe est requis.
+    </div>
+    <div
+      *ngIf="
+        employeeForm.get('password')?.hasError('minlength') &&
+        employeeForm.get('password')?.touched
+      "
+      class="text-danger"
+    >
+      Le mot de passe doit comporter au moins 6 caractères.
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary btn-sm mt-4">
+    Mettre à jour
+  </button>
+</form>
