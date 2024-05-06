@@ -22,6 +22,18 @@
         </li>
       </ul>
       <ul class="navbar-nav">
+        <!-- Language icon -->
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="toggleLanguageDropdown()">
+            <span>{{ getCurrentLanguageCode() }}</span>
+            <img
+              src="assets/icons/lng.png"
+              class="language-icon"
+              style="width: 20px; height: 20px"
+            />
+          </a>
+        </li>
+
         <!-- Dropdown for language selection -->
         <li class="nav-item dropdown">
           <a

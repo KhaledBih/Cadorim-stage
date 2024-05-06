@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit {
   public addModal!: ModalDirective;
   employee = new Employee();
   employees: any;
+  languageDropdownVisible = false;
 
   constructor(
     private dataService: DataService,
@@ -29,6 +30,15 @@ export class NavbarComponent implements OnInit {
   switchLanguage(language: string) {
     this.translate.use(language);
     localStorage.setItem('preferredLanguage', language); // Store selected language in local storage
+  }
+  toggleLanguageDropdown() {
+    this.languageDropdownVisible = !this.languageDropdownVisible; // Toggle the visibility of the language selection dropdown
+  }
+  getCurrentLanguageCode(): string {
+    // Get the current language code from the TranslateService
+    const currentLanguage = this.translate.currentLang;
+    // Extract the first two letters of the language code
+    return currentLanguage.substr(0, 2).toUpperCase();
   }
 
   getEmployeesdata() {
