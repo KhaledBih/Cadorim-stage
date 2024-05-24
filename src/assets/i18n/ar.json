@@ -1,4 +1,6 @@
 {
+  "Login": "دخول",
+  "Login failed. Please try again.": "فشل الدخول. الرجاء المحاولة ثانية",
   "Employee added successfully!": "تمت إضافة الموظف بنجاح!",
   "Success": "نجاح",
   "Are you sure?": "هل أنت متأكد؟",
@@ -12,6 +14,7 @@
   "Add employee": "اضافة عامل",
   "Your employee has been updated.": "تم تحديث موظفك.",
   "Error!": "خطأ!",
+  "Error": "خطأ!",
   "There was an error updating the employee.": "حدث خطأ أثناء تحديث الموظف.",
   "Enter name": "أدخل الاسم",
   "Name is required.": "الاسم مطلوب.",

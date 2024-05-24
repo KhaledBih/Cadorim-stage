@@ -73,6 +73,13 @@
             "Add" | translate
           }}</a>
         </li>
+
+        <!-- Login button -->
+        <li class="nav-item">
+          <a class="nav-link" (click)="openLoginModal()">{{
+            "Login" | translate
+          }}</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -83,32 +90,30 @@
   #addmodal="bs-modal"
   class="modal fade"
   tabindex="-1"
-  aria-labelledby="libererLabel"
+  aria-labelledby="addLabel"
   aria-hidden="true"
 >
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-          {{ "Add employee" | translate }}
-        </h5>
+        <h5 class="modal-title" id="addLabel">{{ "Register" | translate }}</h5>
       </div>
       <div class="modal-body">
-        <form (ngSubmit)="insertData(employeeForm)" #employeeForm="ngForm">
+        <form (ngSubmit)="addEmploy(registerForm)" #registerForm="ngForm">
           <div class="form-group">
             <label for="name">{{ "Enter name" | translate }}</label>
             <input
               type="text"
               name="name"
               class="form-control"
-              [(ngModel)]="employee.name"
+              [(ngModel)]="registerData.name"
               required
               minlength="3"
             />
             <div
               *ngIf="
-                employeeForm.controls['name'].errors?.['required'] &&
-                employeeForm.controls['name'].touched
+                registerForm.controls['name']?.errors?.['required'] &&
+                registerForm.controls['name']?.touched
               "
               class="text-danger"
             >
@@ -116,8 +121,8 @@
             </div>
             <div
               *ngIf="
-                employeeForm.controls['name'].errors?.['minlength'] &&
-                employeeForm.controls['name'].touched
+                registerForm.controls['name']?.errors?.['minlength'] &&
+                registerForm.controls['name']?.touched
               "
               class="text-danger"
             >
@@ -130,14 +135,14 @@
               type="email"
               name="email"
               class="form-control"
-              [(ngModel)]="employee.email"
+              [(ngModel)]="registerData.email"
               required
               email
             />
             <div
               *ngIf="
-                employeeForm.controls['email'].errors?.['required'] &&
-                employeeForm.controls['email'].touched
+                registerForm.controls['email']?.errors?.['required'] &&
+                registerForm.controls['email']?.touched
               "
               class="text-danger"
             >
@@ -145,8 +150,8 @@
             </div>
             <div
               *ngIf="
-                employeeForm.controls['email'].errors?.['email'] &&
-                employeeForm.controls['email'].touched
+                registerForm.controls['email']?.errors?.['email'] &&
+                registerForm.controls['email']?.touched
               "
               class="text-danger"
             >
@@ -159,46 +164,133 @@
               type="password"
               name="password"
               class="form-control"
-              [(ngModel)]="employee.password"
+              [(ngModel)]="registerData.password"
               required
               minlength="6"
             />
             <div
               *ngIf="
-                employeeForm.controls['password'].errors?.['required'] &&
-                employeeForm.controls['password'].touched
+                registerForm.controls['password']?.errors?.['required'] &&
+                registerForm.controls['password']?.touched
               "
               class="text-danger"
             >
               {{ "Password is required." | translate }}
             </div>
-            <!-- can  -->
             <div
               *ngIf="
-                employeeForm.controls['password'].errors?.['minlength'] &&
-                employeeForm.controls['password'].touched
+                registerForm.controls['password']?.errors?.['minlength'] &&
+                registerForm.controls['password']?.touched
               "
               class="text-danger"
             >
               {{ "Password must be at least 6 characters." | translate }}
             </div>
           </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="closeAddModal()"
+            >
+              {{ "Close" | translate }}
+            </button>
+            <button type="submit" class="btn btn-primary">
+              {{ "Register" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Login modal-->
+<div
+  bsModal
+  #loginmodal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  aria-labelledby="loginLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginLabel">{{ "Login" | translate }}</h5>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="login()" #loginForm="ngForm">
+          <div class="form-group">
+            <label for="email">{{ "Enter email" | translate }}</label>
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              [(ngModel)]="loginData.email"
+              required
+              email
+            />
+            <div
+              *ngIf="
+                loginForm.controls['email'].errors?.['required'] &&
+                loginForm.controls['email'].touched
+              "
+              class="text-danger"
+            >
+              {{ "Email is required." | translate }}
+            </div>
+            <div
+              *ngIf="
+                loginForm.controls['email'].errors?.['email'] &&
+                loginForm.controls['email'].touched
+              "
+              class="text-danger"
+            >
+              {{ "Please enter a valid email address." | translate }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">{{ "Enter password" | translate }}</label>
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              [(ngModel)]="loginData.password"
+              required
+              minlength="6"
+            />
+            <div
+              *ngIf="
+                loginForm.controls['password'].errors?.['required'] &&
+                loginForm.controls['password'].touched
+              "
+              class="text-danger"
+            >
+              {{ "Password is required." | translate }}
+            </div>
+            <div
+              *ngIf="
+                loginForm.controls['password'].errors?.['minlength'] &&
+                loginForm.controls['password'].touched
+              "
+              class="text-danger"
+            >
+              {{ "Password must be at least 6 characters." | translate }}
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            {{ "Login" | translate }}
+          </button>
         </form>
       </div>
       <div class="modal-footer">
         <button
           type="button"
           class="btn btn-secondary"
-          (click)="closeAddModal()"
+          (click)="closeLoginModal()"
         >
           {{ "Close" | translate }}
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="addEmploy(employeeForm)"
-        >
-          {{ "Add" | translate }}
         </button>
       </div>
     </div>

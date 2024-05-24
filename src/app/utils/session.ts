@@ -1,1 +1,1 @@
-export const session = true;
+export const session = false;

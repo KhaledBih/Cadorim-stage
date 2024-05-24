@@ -1,4 +1,6 @@
 {
+  "Login": "Connecter",
+  "Login failed. Please try again.": "La connexion a échoué. Veuillez réessayer",
   "Employee added successfully!": "Employé ajouté avec succès !",
   "Success": "Succès",
   "Are you sure?": "Êtes-vous sûr ?",
@@ -13,6 +15,7 @@
   "Updated!": "Mis à jour !",
   "Your employee has been updated.": "Votre employé a été mis à jour.",
   "Error!": "Erreur !",
+  "Error": "Error",
   "There was an error updating the employee.": "Une erreur s'est produite lors de la mise à jour de l'employé.",
   "Enter name": "Entrez le nom",
   "Name is required.": "Le nom est requis.",

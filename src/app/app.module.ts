@@ -12,6 +12,8 @@ import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './guards/auth-guard.guard';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -24,6 +26,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeComponent,
     NavbarComponent,
     EmployeeEditComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       defaultLanguage: 'en',
     }),
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

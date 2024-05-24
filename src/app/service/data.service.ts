@@ -1,33 +1,79 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private httpclient: HttpClient) {}
-  httpOptions = {
-    headers: new HttpHeaders({
+  private apiUrl = 'http://localhost:3000/api/users';
+  private authToken: string | null = null;
+
+  constructor(private httpclient: HttpClient) {
+    this.authToken = localStorage.getItem('authToken');
+  }
+
+  setAuthToken(token: string) {
+    this.authToken = token;
+    localStorage.setItem('authToken', token);
+  }
+
+  clearAuthToken() {
+    this.authToken = null;
+    localStorage.removeItem('authToken');
+  }
+
+  private getRequestHeaders() {
+    let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-    }),
-  };
-  getData() {
-    return this.httpclient.get('http://localhost:8000/api/users/');
+    });
+
+    if (this.authToken) {
+      headers = headers.append('Authorization', `Bearer ${this.authToken}`);
+    }
+
+    return { headers: headers };
   }
-  insertData(data: any) {
-    return this.httpclient.post('http://localhost:8000/api/users/', data);
+
+  register(credentials: any): Observable<any> {
+    return this.httpclient.post(`${this.apiUrl}/register`, credentials);
   }
-  deleteData(id: any) {
-    return this.httpclient.delete('http://localhost:8000/api/users/' + id);
+
+  login(credentials: any): Observable<any> {
+    return this.httpclient.post(`${this.apiUrl}/login`, credentials);
   }
-  getEmployeeByID(id: any) {
-    return this.httpclient.get('http://localhost:8000/api/users/' + id);
+
+  getData(): Observable<any> {
+    return this.httpclient.get(this.apiUrl, this.getRequestHeaders());
   }
-  updateData(id: any, data: any) {
-    return this.httpclient.put(
-      'http://localhost:8000/api/users/' + id,
-      JSON.stringify(data),
-      this.httpOptions
+
+  insertData(data: any): Observable<any> {
+    return this.httpclient.post(this.apiUrl, data, this.getRequestHeaders());
+  }
+
+  deleteData(id: any): Observable<any> {
+    return this.httpclient.delete(
+      `${this.apiUrl}/${id}`,
+      this.getRequestHeaders()
     );
+  }
+
+  getEmployeeByID(id: any): Observable<any> {
+    return this.httpclient.get(
+      `${this.apiUrl}/${id}`,
+      this.getRequestHeaders()
+    );
+  }
+
+  updateData(id: any, data: any): Observable<any> {
+    return this.httpclient.put(
+      `${this.apiUrl}/${id}`,
+      data,
+      this.getRequestHeaders()
+    );
+  }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('authToken');
   }
 }

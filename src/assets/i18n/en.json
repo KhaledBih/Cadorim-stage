@@ -1,4 +1,6 @@
 {
+  "Login": "Login",
+  "Login failed. Please try again.": "Login failed. Please try again.",
   "Employee added successfully!": "Employee added successfully!",
   "Success": "Success",
   "Are you sure?": "Are you sure?",
@@ -10,6 +12,7 @@
   "Updated!": "Updated!",
   "Your employee has been updated.": "Your employee has been updated.",
   "Error!": "Error!",
+  "Error": "Error!",
   "There was an error updating the employee.": "There was an error updating the employee.",
   "Enter name": "Enter name",
   "Name is required.": "Name is required.",
